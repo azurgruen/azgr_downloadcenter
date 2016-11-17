@@ -1,0 +1,8 @@
+config.tx_extbase.persistence.classes {
+	Azurgruen\AzgrDownloadcenter\Domain\Model\Category {
+		mapping {
+			tableName = sys_category
+			recordType = Tx_Downloadcenter_Category
+		}
+	}
+}

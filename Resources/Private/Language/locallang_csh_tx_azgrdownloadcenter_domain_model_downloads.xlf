@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-10-02T15:09:00Z" product-name="azgr_downloadcenter">
+		<header/>
+		<body>
+			<trans-unit id="uuid.description">
+				<source>uuid</source>
+			</trans-unit>
+			<trans-unit id="filename.description">
+				<source>filename</source>
+			</trans-unit>
+			<trans-unit id="files.description">
+				<source>files</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

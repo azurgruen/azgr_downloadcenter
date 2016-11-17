@@ -1,0 +1,22 @@
+
+.downloadcenter .basket .items,
+.downloadcenter .filecollection,
+.downloadcenter .panel,
+.downloadcenter .tab-content > * {
+	display: none;
+}
+
+.downloadcenter .basket .items.active,
+.downloadcenter .filecollection.active,
+.downloadcenter .panel.active,
+.downloadcenter .tab-content > *.active {
+	display: inherit;
+}
+
+.downloadcenter .basket {
+	display: inline-block;
+}
+
+.downloadcenter .basket .items {
+	cursor: pointer;
+}

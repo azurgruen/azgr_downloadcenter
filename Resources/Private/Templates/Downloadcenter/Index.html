@@ -1,0 +1,94 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true"
+	xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers">
+<f:layout name="Default" />
+
+<f:section name="main">
+
+<f:flashMessages />
+
+<v:asset.script content="Downloadcenter.setBuildUrl('{f:uri.action(action:'create', format:'json', pageType:'65478', noCacheHash:'true')}')" />
+
+
+<div class="downloadcenter">
+	
+	<div class="row">
+		<div class="col-sm-6">
+			<h2>{header}</h2>
+		</div>
+		<div class="col-sm-6">
+			<div class="filecollection">
+				<div class="basket">
+					<a class="label" href="#">
+						<f:translate key="filecollection.countlabel" arguments="{0: '<span class=\'count\'></span>'}" />
+					</a>
+					<div class="items"></div>
+				</div>
+				<a class="init btn open-in-lightbox" href="#sad">
+					<f:translate key="filecollection.download" />
+				</a>
+			</div>
+		</div>
+	</div>
+	
+	<f:for each="{downloadsections}" as="downloadsection" iteration="iterator">
+		<a class="panel-switch" data-pid="{iterator.index}" href="#">{downloadsection.title}</a>
+	</f:for>
+	
+	<f:for each="{downloadsections}" as="downloadsection" iteration="iterator">
+		
+		<div class="panel" data-pid="{iterator.index}">
+	
+			<div class="tab-nav">
+				<f:for each="{downloadsection.collections}" as="collection">
+					<a href="#" data-tid="{collection.uid}">
+						<f:if condition="{collection.category.firstImage}">
+							<f:image src="{collection.category.firstImage.uid}" treatIdAsReference="true" />
+						</f:if>
+						<f:if condition="{collection.category}">
+							<f:then>{collection.category.title}</f:then>
+							<f:else>{collection.title}</f:else>
+						</f:if>
+					</a>
+				</f:for>
+			</div>
+		
+			<div class="tab-content">
+				<f:for each="{downloadsection.collections}" as="collection">
+					<div data-tid="{collection.uid}" data-group="{collection.title}">
+					<h3>{collection.title}</h3>
+					<f:for each="{collection}" as="file">
+						<div class="file" data-id="{file.uid}">
+							<p class="cat-1">{file.cat1.title}</p>
+							<p class="cat-2">{file.cat2.title}</p>
+							<p class="title">
+							<f:if condition="{file.properties.title}">
+								<f:then>
+									{file.properties.title}
+								</f:then>
+								<f:else>
+									{file.name}
+								</f:else>
+							</f:if>
+							</p>
+							<div class="description">
+								<f:format.html>{file.properties.description}</f:format.html>
+							</div>
+							<f:if condition="{file.cat2.firstImage}">
+								<f:image src="{file.cat2.firstImage.uid}" treatIdAsReference="true" />
+							</f:if>
+							<v:media.pdfThumbnail src="{file.publicUrl}" width="150" alt="{file.properties.alternative}" />
+						</div>
+					</f:for>
+					</div>
+				</f:for>
+			</div>
+			
+		</div>
+		
+	</f:for>
+
+</div>
+
+</f:section>
+</html>

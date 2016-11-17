@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-10-02T15:09:00Z" product-name="azgr_downloadcenter">
+		<header/>
+		<body>
+			<trans-unit id="tx_azgrdownloadcenter_domain_model_downloads">
+				<source>Downloads</source>
+			</trans-unit>
+			<trans-unit id="tx_azgrdownloadcenter_domain_model_downloads.uuid">
+				<source>Uuid</source>
+			</trans-unit>
+			<trans-unit id="tx_azgrdownloadcenter_domain_model_downloads.filename">
+				<source>Filename</source>
+			</trans-unit>
+			<trans-unit id="tx_azgrdownloadcenter_domain_model_downloads.files">
+				<source>Files</source>
+			</trans-unit>
+			
+			<!-- Backend -->
+			<trans-unit id="title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="file_collections">
+				<source>File Collections</source>
+			</trans-unit>
+			<trans-unit id="category_image">
+				<source>Category image</source>
+			</trans-unit>
+			
+			<!-- Frontend -->
+			<trans-unit id="filecollection.countlabel">
+				<source>%s PDFs selected</source>
+			</trans-unit>
+			<trans-unit id="filecollection.download">
+				<source>Download Infopackage</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
