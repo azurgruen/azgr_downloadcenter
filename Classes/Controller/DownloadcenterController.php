@@ -3,8 +3,6 @@ namespace Azurgruen\AzgrDownloadcenter\Controller;
 
 use \TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use \TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-//use \TYPO3\CMS\Extbase\Mvc\View\JsonView;
-//use \TYPO3\CMS\Fluid\View\TemplateView;
 use \ZipArchive;
 
 /***
@@ -65,13 +63,6 @@ class DownloadcenterController extends ActionController
      */
     protected $zip;
     
-
-    /**
-     * @var string
-     */
-    //protected $defaultViewObjectName = TemplateView::class;
-    
-    
     public function __construct()
     {
 	    $this->hash = uniqid();
@@ -125,13 +116,11 @@ class DownloadcenterController extends ActionController
 	    if (!defined('TYPO3_MODE')) {
 		    die('Access denied.');
 		}
-		//$this->request->setFormat('json');
 	    if ($this->request->hasArgument('files')) {
 			$files = $this->request->getArgument('files');
 			if (!empty($files)) {
-				$hash = uniqid();
 			    $this->zip = new ZipArchive();
-				$filename = $this->settings['uploadDir'].$this->settings['zipPrefix'].$hash.'.zip';
+				$filename = $this->settings['uploadDir'].$this->settings['zipPrefix'].$this->hash.'.zip';
 				if ($this->zip->open($filename, ZipArchive::CREATE) !== true) {
 				    return '{"error": "no file created"}';
 				    exit;
@@ -143,7 +132,6 @@ class DownloadcenterController extends ActionController
 			    $this->zip->close();
 				$file = $this->request->getBaseUri().$filename;
 			    return json_encode(['file' => $file], JSON_UNESCAPED_SLASHES);
-			    //$this->view->assign('filename',$filename);
 			} else {
 				return '{"error": "no files defined"}';
 			}
@@ -176,33 +164,14 @@ class DownloadcenterController extends ActionController
 			    if ($collection !== null) {
 					$collection->loadContents();
 					$this->downloadsections[$key]['collections'][] = $collection;
-					$labelCategories = [1,28];
 					foreach ($collection as $file) {
-						$cat1 = $cat2 = '';
-						$categories = $this->getCategoriesFromFile($file->getUid());
-						foreach ($categories as $category) {
-							$parentCategory = $category->getParent();
-							if ($parentCategory !== null) {
-								$pid = $parentCategory->getUid();
-								if (in_array($pid, $labelCategories)) {
-									$cat1 = $category;
-								}
-								if ($cat1 !== null && $cat1 !== '') {
-									if ($pid === $cat1->getUid()) {
-										$cat2 = $category;
-									}
-								}
-							}
-						}
-						$file->cat1 = $cat1;
-						$file->cat2 = $cat2;
-						//DebuggerUtility::var_dump($categories);
+						$file->categories = $this->getCategoriesFromFile($file->getUid());
 					}
 				}
 		    }
 	    }
 	    $this->contentObj = $this->configurationManager->getContentObject();
-        //DebuggerUtility::var_dump($this->hash);
+        //DebuggerUtility::var_dump($this->downloadsections);
         //$this->view->assign('downloadsections', $this->downloadsections);
         $this->view->assignMultiple([
 	        'header' => $this->contentObj->data['header'],

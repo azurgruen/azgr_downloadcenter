@@ -12,6 +12,10 @@ plugin.tx_azgrdownloadcenter_downloadcenter {
     # cat=plugin.tx_azgrdownloadcenter_downloadcenter//a; type=string; label=Default storage PID
     #storagePid =
   }
+  settings {
+	# cat=plugin.tx_azgrdownloadcenter_downloadcenter//a; type=boolean; label=Include jQuery
+    includejQuery = 0
+  }
 }
 
 plugin.tx_azgrdownloadcenter_zip {
@@ -21,9 +25,9 @@ plugin.tx_azgrdownloadcenter_zip {
 		# cat=plugin.tx_azgrdownloadcenter_zip/settings; type=string; label=Upload directory
 	    uploadDir = uploads/zip/
 	    # cat=plugin.tx_azgrdownloadcenter_zip/settings; type=string; label=Zip file prefix
-	    zipPrefix = proALPHA-Downloads-
+	    zipPrefix = downloads-
 	    # cat=plugin.tx_azgrdownloadcenter_zip/settings; type=string; label=Zip directory
-	    zipDir = proALPHA Downloads
+	    zipDir = Downloads
 	    # cat=plugin.tx_azgrdownloadcenter_zip/settings; type=string; label=Always add following files (comma-separated id)
 	    filesDefault = 
   }

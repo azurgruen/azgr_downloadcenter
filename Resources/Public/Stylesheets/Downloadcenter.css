@@ -3,7 +3,7 @@
 .downloadcenter .filecollection,
 .downloadcenter .panel,
 .downloadcenter .tab-content > * {
-	display: none;
+/* 	display: none; */
 }
 
 .downloadcenter .basket .items.active,

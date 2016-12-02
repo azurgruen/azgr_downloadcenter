@@ -27,9 +27,14 @@ plugin.tx_azgrdownloadcenter_downloadcenter {
 
 page.includeCSS.downloadcenter = EXT:azgr_downloadcenter/Resources/Public/Stylesheets/Downloadcenter.css
 page.includeJS {
+	jquery = https://code.jquery.com/jquery-3.1.1.min.js
+	jquery {
+		external = 1
+		excludeFromConcatenation = 1
+		disableCompression = 1
+		if.isTrue = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.includejQuery}
+	}
 	autoform = EXT:azgr_downloadcenter/Resources/Public/Javascript/jquery.autoform.min.js
-	#autoform = http://localhost/_schuetz/jquery.autoform.js
-	#autoform.external = 1
 	downloadcenter = EXT:azgr_downloadcenter/Resources/Public/Javascript/Downloadcenter.js
 }
 

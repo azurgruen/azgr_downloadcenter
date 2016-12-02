@@ -28,27 +28,6 @@
 							</config>
 						</TCEforms>
 					</settings.downloadsections.0.filecollections>
-					<settings.downloadsections.1.title>
-						<TCEforms>
-							<label>LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang.xlf:title</label>
-							<config>
-								<type>input</type>
-								
-							</config>
-						</TCEforms>
-					</settings.downloadsections.1.title>
-					<settings.downloadsections.1.filecollections>
-						<TCEforms>
-							<label>LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang.xlf:file_collections</label>
-							<config>
-								<type>select</type>
-								<foreign_table>sys_file_collection</foreign_table>
- 								<!-- <foreign_table_where>ORDER BY title</foreign_table_where> -->
-								<minitems>0</minitems>
-								<maxitems>99</maxitems>
-							</config>
-						</TCEforms>
-					</settings.downloadsections.1.filecollections>
 				</el>
 			</ROOT>
 		</sDEF>

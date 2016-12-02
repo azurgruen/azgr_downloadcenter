@@ -5,6 +5,7 @@ var Downloadcenter = (function($) {
 	var
 	buildurl,
 	domcontainer = '.downloadcenter', // css selectors below are children of this container
+	cookiename = 'azgrdlc',
 	el = {},
 	css = {
 		classes : {
@@ -44,7 +45,14 @@ var Downloadcenter = (function($) {
 	},
 	file = {},
 	init = function() {
-		// preselect files
+		var cookiedata = Cookies.getJSON(cookiename);
+		// preselect files (cookie)
+		if (cookiedata !== undefined) {
+			cookiedata.forEach(function(id) {
+				basket.add(id);
+			});
+		}
+		// preselect files (url)
 		if (location.hash) {
 			var active = location.hash.substr(1).split(','),
 				pid = file.getPanel(active[0]),
@@ -163,6 +171,7 @@ var Downloadcenter = (function($) {
 		}
 		basket.files.push(id);
 		basket.filetitles.push(title);
+		Cookies.set(cookiename, basket.files);
 		el.basketcount.text(basket.countItems());
 		el.files.filter('[data-'+basket.dataAttr+'="'+id+'"]').addClass(css.classes.active);
 	};
@@ -180,7 +189,10 @@ var Downloadcenter = (function($) {
 		el.basketcount.text(basket.countItems());
 		el.files.filter('[data-'+basket.dataAttr+'="'+id+'"]').removeClass(css.classes.active);
 		if (basket.isEmpty()) {
+			Cookies.remove(cookiename);
 			el.filecollection.removeClass(css.classes.active);
+		} else {
+			Cookies.set(cookiename, basket.files);
 		}
 	};
 	
@@ -238,7 +250,7 @@ var Downloadcenter = (function($) {
 		});
 		
 		el.submit.one('click', function(e) {
-			if ($(this).data('preventDefault') === undefined) {
+			//if ($(this).data('preventDefault') === undefined) {
 				e.preventDefault();
 				if (basket.files !== '') {
 					//$(this).prop('disabled', true);
@@ -251,10 +263,10 @@ var Downloadcenter = (function($) {
 						$('#powermail_field_downloadlink').val(data.file);
 						$('#powermail_field_dateien').val(basket.filetitles.join(','));
 						$(that).data('preventDefault', false);
-						that.click();
+						//that.click();
 					});
 				}
-			}
+			//}
 		});
 		
 		$('form').autoform({
