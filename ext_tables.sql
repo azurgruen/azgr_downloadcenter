@@ -8,7 +8,7 @@ CREATE TABLE tx_azgrdownloadcenter_domain_model_downloads (
 
 	uuid varchar(255) DEFAULT '' NOT NULL,
 	filename varchar(255) DEFAULT '' NOT NULL,
-	files varchar(255) DEFAULT '' NOT NULL,
+	files int(11) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

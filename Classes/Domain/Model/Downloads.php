@@ -34,9 +34,9 @@ class Downloads extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * files
      *
-     * @var string
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
      */
-    protected $files = '';
+    protected $files;
 
     /**
      * Returns the uuid
@@ -83,7 +83,7 @@ class Downloads extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the files
      *
-     * @return string $files
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage
      */
     public function getFiles()
     {
