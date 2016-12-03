@@ -23,6 +23,12 @@ call_user_func(
 
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_azgrdownloadcenter_domain_model_downloads', 'EXT:azgr_downloadcenter/Resources/Private/Language/locallang_csh_tx_azgrdownloadcenter_domain_model_downloads.xlf');
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_azgrdownloadcenter_domain_model_downloads');
+        
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['Azurgruen\AzgrDownloadcenter\Task\Cleaner'] = [
+			'extension' => $extKey,
+			'title' => 'Delete old Files',
+			'description' => 'Some Description',
+		];
 
     },
     $_EXTKEY

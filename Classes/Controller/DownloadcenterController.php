@@ -120,7 +120,7 @@ class DownloadcenterController extends ActionController
 			$files = $this->request->getArgument('files');
 			if (!empty($files)) {
 			    $this->zip = new ZipArchive();
-				$filename = $this->settings['uploadDir'].$this->settings['zipPrefix'].$this->hash.'.zip';
+				$filename = 'fileadmin/'.$this->settings['uploadDir'].$this->settings['zipPrefix'].$this->hash.'.zip';
 				if ($this->zip->open($filename, ZipArchive::CREATE) !== true) {
 				    return '{"error": "no file created"}';
 				    exit;
@@ -166,6 +166,11 @@ class DownloadcenterController extends ActionController
 					$this->downloadsections[$key]['collections'][] = $collection;
 					foreach ($collection as $file) {
 						$file->categories = $this->getCategoriesFromFile($file->getUid());
+						if ($file->getCreationTime() > strtotime('-'.$this->settings['newUntil'].' day')) {
+							$file->isnew = true;
+						} else {
+							$file->isnew = false;
+						}
 					}
 				}
 		    }

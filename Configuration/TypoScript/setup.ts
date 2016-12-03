@@ -12,6 +12,9 @@ plugin.tx_azgrdownloadcenter_downloadcenter {
     storagePid = {$plugin.tx_azgrdownloadcenter_downloadcenter.persistence.storagePid}
     #recursive = 1
   }
+  settings {
+	newUntil = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.newUntil}
+  }
   features {
     #skipDefaultArguments = 1
   }
@@ -45,6 +48,7 @@ plugin.tx_azgrdownloadcenter_zip {
 	    zipPrefix = {$plugin.tx_azgrdownloadcenter_zip.settings.zipPrefix}
 	    zipDir = {$plugin.tx_azgrdownloadcenter_zip.settings.zipDir}
 	    filesDefault = {$plugin.tx_azgrdownloadcenter_zip.settings.filesDefault}
+	    ttl = {$plugin.tx_azgrdownloadcenter_zip.settings.ttl}
 	  }
 }
 
