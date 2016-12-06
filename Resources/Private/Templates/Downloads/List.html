@@ -17,26 +17,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
 <f:flashMessages />
 
-<table  class="tx_azgrdownloadcenter" >
-	<tr>
-		<th><f:translate key="tx_azgrdownloadcenter_domain_model_downloads.uuid" /></th>
-		<th><f:translate key="tx_azgrdownloadcenter_domain_model_downloads.filename" /></th>
-		<th><f:translate key="tx_azgrdownloadcenter_domain_model_downloads.files" /></th>
-		<th> </th>
-		<th> </th>
-	</tr>
+	<f:debug>{downloads}</f:debug>
 
-	<f:for each="{downloadss}" as="downloads">
-		<tr>
-			<td><f:link.action action="show" arguments="{downloads : downloads}"> {downloads.uuid}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{downloads : downloads}"> {downloads.filename}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{downloads : downloads}"> {downloads.files}</f:link.action></td>
-			<td><f:link.action action="edit" arguments="{downloads : downloads}">Edit</f:link.action></td>
-			<td><f:link.action action="delete" arguments="{downloads : downloads}">Delete</f:link.action></td>
-		</tr>
-	</f:for>
-</table>
-
-<f:link.action action="new">New Downloads</f:link.action>
 </f:section>
 </html>

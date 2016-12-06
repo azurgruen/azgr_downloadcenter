@@ -12,7 +12,8 @@ call_user_func(
             'Azurgruen.AzgrDownloadcenter',
             'Downloadcenter',
             [
-                'Downloadcenter' => 'index'
+                'Downloadcenter' => 'index',
+                'Downloads' => 'new, create, list'
             ],
             // non-cacheable actions
             [
@@ -20,7 +21,7 @@ call_user_func(
                 'Downloads' => ''
             ]
         );
-        
+                
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             'Azurgruen.AzgrDownloadcenter',
             'zip',

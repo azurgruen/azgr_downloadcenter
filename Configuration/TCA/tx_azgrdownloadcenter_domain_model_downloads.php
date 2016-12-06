@@ -19,14 +19,14 @@ return [
 			'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'uuid,filename,files,',
+        'searchFields' => 'uuid,filename,files,salutation,first_name,last_name,company,email',
         'iconfile' => 'EXT:azgr_downloadcenter/Resources/Public/Icons/tx_azgrdownloadcenter_domain_model_downloads.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, uuid, filename, files',
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, uuid, filename, files, salutation, first_name, last_name, company, email',
     ],
     'types' => [
-        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, uuid, filename, files, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, uuid, filename, files, salutation, first_name, last_name, company, email, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
     ],
     'columns' => [
         'sys_language_uid' => [
@@ -133,6 +133,102 @@ return [
 	    'files' => [
 	        'exclude' => 1,
 	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.files',
+	        'config' => 
+	        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+			    'images',
+			    [
+			        'appearance' => [
+			            'createNewRelationLinkTitle' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:images.addFileReference'
+			        ],
+			        'foreign_types' => [
+			            '0' => [
+			                'showitem' => '
+			                --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+			                --palette--;;filePalette'
+			            ],
+			            \TYPO3\CMS\Core\Resource\File::FILETYPE_TEXT => [
+			                'showitem' => '
+			                --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+			                --palette--;;filePalette'
+			            ],
+			            \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
+			                'showitem' => '
+			                --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+			                --palette--;;filePalette'
+			            ],
+			            \TYPO3\CMS\Core\Resource\File::FILETYPE_AUDIO => [
+			                'showitem' => '
+			                --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+			                --palette--;;filePalette'
+			            ],
+			            \TYPO3\CMS\Core\Resource\File::FILETYPE_VIDEO => [
+			                'showitem' => '
+			                --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+			                --palette--;;filePalette'
+			            ],
+			            \TYPO3\CMS\Core\Resource\File::FILETYPE_APPLICATION => [
+			                'showitem' => '
+			                --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+			                --palette--;;filePalette'
+			            ]
+			        ],
+			        'maxitems' => 99
+			    ],
+			    $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
+			),
+	        
+	    ],
+	    'salutation' => [
+	        'exclude' => 1,
+	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.salutation',
+	        'config' => [
+			    'type' => 'radio',
+			    'items' => [
+				    [
+					    'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.salutation.I.0',
+					    0
+				    ],
+				    [
+					    'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.salutation.I.1',
+					    1
+				    ]
+			    ]
+			],
+	        
+	    ],
+	    'first_name' => [
+	        'exclude' => 1,
+	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.firstName',
+	        'config' => [
+			    'type' => 'input',
+			    'size' => 30,
+			    'eval' => 'trim'
+			],
+	        
+	    ],
+	    'last_name' => [
+	        'exclude' => 1,
+	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.lastName',
+	        'config' => [
+			    'type' => 'input',
+			    'size' => 30,
+			    'eval' => 'trim'
+			],
+	        
+	    ],
+	    'company' => [
+	        'exclude' => 1,
+	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.company',
+	        'config' => [
+			    'type' => 'input',
+			    'size' => 30,
+			    'eval' => 'trim'
+			],
+	        
+	    ],
+	    'email' => [
+	        'exclude' => 1,
+	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.email',
 	        'config' => [
 			    'type' => 'input',
 			    'size' => 30,

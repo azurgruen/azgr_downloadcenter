@@ -9,8 +9,8 @@ plugin.tx_azgrdownloadcenter_downloadcenter {
     layoutRootPath =
   }
   persistence {
-    # cat=plugin.tx_azgrdownloadcenter_downloadcenter//a; type=string; label=Default storage PID
-    #storagePid =
+    # cat=plugin.tx_azgrdownloadcenter_downloadcenter//a; type=int+; label=Default storage PID
+    storagePid =
   }
   settings {
 	# cat=plugin.tx_azgrdownloadcenter_downloadcenter//a; type=int+; label=New until (days)
