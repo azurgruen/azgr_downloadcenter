@@ -171,7 +171,8 @@ var Downloadcenter = (function($) {
 		}
 		basket.files.push(id);
 		basket.filetitles.push(title);
-		Cookies.set(cookiename, basket.files);
+		Cookies.set(cookiename, JSON.stringify(basket.files));
+		console.log(JSON.stringify(basket.files));
 		el.basketcount.text(basket.countItems());
 		el.files.filter('[data-'+basket.dataAttr+'="'+id+'"]').addClass(css.classes.active);
 	};
@@ -192,7 +193,7 @@ var Downloadcenter = (function($) {
 			Cookies.remove(cookiename);
 			el.filecollection.removeClass(css.classes.active);
 		} else {
-			Cookies.set(cookiename, basket.files);
+			Cookies.set(cookiename, JSON.stringify(basket.files));
 		}
 	};
 	
@@ -249,6 +250,7 @@ var Downloadcenter = (function($) {
 			basket.remove($(this).data('id'));
 		});
 		
+/*
 		el.submit.one('click', function(e) {
 			//if ($(this).data('preventDefault') === undefined) {
 				e.preventDefault();
@@ -268,6 +270,7 @@ var Downloadcenter = (function($) {
 				}
 			//}
 		});
+*/
 		
 		$('form').autoform({
 			idAttr : 'name',

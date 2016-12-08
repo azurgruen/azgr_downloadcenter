@@ -1,7 +1,7 @@
 #
-# Table structure for table 'tx_azgrdownloadcenter_domain_model_downloads'
+# Table structure for table 'tx_azgrdownloadcenter_domain_model_download'
 #
-CREATE TABLE tx_azgrdownloadcenter_domain_model_downloads (
+CREATE TABLE tx_azgrdownloadcenter_domain_model_download (
 
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,

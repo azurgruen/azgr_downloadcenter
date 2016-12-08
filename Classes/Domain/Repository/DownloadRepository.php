@@ -13,8 +13,8 @@ namespace Azurgruen\AzgrDownloadcenter\Domain\Repository;
  ***/
 
 /**
- * The repository for Downloads
+ * The repository for Download
  */
-class DownloadsRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class DownloadRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-    }
+}

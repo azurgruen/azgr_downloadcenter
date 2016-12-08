@@ -4,7 +4,12 @@
 <f:section name="main">
 
 <f:form method="post" action="create" name="download" object="{download}" id="dlc">
-	<f:form.hidden property="files" />
+	<f:for each="{files}" as="file" iteration="iterator">
+		<f:comment><f:form.hidden property="files.{iterator.index}" value="{file}" /></f:comment>
+	</f:for>
+	<f:form.hidden property="files.0" value="8" />
+	<f:form.hidden property="files.1" value="9" />
+	<f:comment><input type="hidden" name="files" value="{files}" /></f:comment>
 	<f:form.radio property="salutation" value="0" />
 	<f:form.radio property="salutation" value="1" />
 	<f:form.textfield property="firstName" />

@@ -13,12 +13,12 @@ call_user_func(
             'Downloadcenter',
             [
                 'Downloadcenter' => 'index',
-                'Downloads' => 'new, create, list'
+                'Download' => 'new, create, list'
             ],
             // non-cacheable actions
             [
 	            'Downloadcenter' => '',
-                'Downloads' => ''
+                'Download' => ''
             ]
         );
                 

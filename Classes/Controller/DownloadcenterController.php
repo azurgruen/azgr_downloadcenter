@@ -3,7 +3,6 @@ namespace Azurgruen\AzgrDownloadcenter\Controller;
 
 use \TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use \TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use \ZipArchive;
 
 /***
  *
@@ -23,12 +22,12 @@ class DownloadcenterController extends ActionController
 {
 	
 	/**
-     * DownloadsRepository
+     * DownloadRepository
      *
-     * @var \Azurgruen\AzgrDownloadcenter\Domain\Repository\DownloadsRepository
+     * @var \Azurgruen\AzgrDownloadcenter\Domain\Repository\DownloadRepository
      * @inject
      */
-    protected $downloadsRepository = null;
+    protected $downloadRepository = null;
     
     /**
      * @var \Azurgruen\AzgrDownloadcenter\Domain\Repository\CategoryRepository
@@ -53,21 +52,6 @@ class DownloadcenterController extends ActionController
      */
     protected $downloadsections = [];
     
-    /**
-     * @var string
-     */
-    protected $hash;
-    
-    /**
-     * @var ZipArchive
-     */
-    protected $zip;
-    
-    public function __construct()
-    {
-	    $this->hash = uniqid();
-    }
-	
 	/**
      * @param int $uid 
      * @return array
@@ -85,68 +69,45 @@ class DownloadcenterController extends ActionController
         return $result;
     }
     
-    /**
-     * @param string $files 
-     * @return void
-     */
-    public function addFilesToZip($files)
-    {
-	    $dir = $this->settings['zipDir'];
-	    $pathprefix = $this->settings['filemount'];
-	    
-	    if (strpos($files, ',') !== false) {
-			$files = explode(',', $files);
-			foreach ($files as $uid) {
-			    $file = $this->fileRepository->findByUid(intval($uid));
-			    $this->zip->addFile($pathprefix.$file->getIdentifier(), $dir.$file->getName());
-		    }
-		} else {
-			$file = $this->fileRepository->findByUid(intval($files));
-		    $this->zip->addFile($pathprefix.$file->getIdentifier(), $dir.$file->getName());
+/*
+    protected function getFileReferences($uid) {
+		$fileRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Resource\\FileRepository');
+		$fileObjects = $fileRepository->findByRelation('tt_content', 'image', $uid);
+		// get Imageobject information
+		$files = array();
+ 
+		//print_r($fileObjects);
+ 
+		foreach ($fileObjects as $key => $value) {
+		  $files[$key]['reference'] = $value->getReferenceProperties();
+		  $files[$key]['original'] = $value->getOriginalFile()->getProperties();
 		}
+ 
+ 
+		return $files;
+	}
+*/
+    
+    protected function getFileReferences()
+    {
+	    $asd = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Resource\\FileRepository');
+	    $query = $asd->createQuery();
+	    $sql = "SELECT uid, uid_local FROM sys_file_reference";
+        $result = $query->statement($sql)->execute()->toArray();
+        return $result;
     }
     
     /**
-     * action create
-     *
-     * @return string
-     */
-    public function createAction()
-    {
-	    if (!defined('TYPO3_MODE')) {
-		    die('Access denied.');
-		}
-	    if ($this->request->hasArgument('files')) {
-			$files = $this->request->getArgument('files');
-			if (!empty($files)) {
-			    $this->zip = new ZipArchive();
-				$filename = 'fileadmin/'.$this->settings['uploadDir'].$this->settings['zipPrefix'].$this->hash.'.zip';
-				if ($this->zip->open($filename, ZipArchive::CREATE) !== true) {
-				    return '{"error": "no file created"}';
-				    exit;
-				}
-				if (!empty($this->settings['filesDefault'])) {
-					$this->addFilesToZip($this->settings['filesDefault']);
-				}
-				$this->addFilesToZip($files);
-			    $this->zip->close();
-				$file = $this->request->getBaseUri().$filename;
-			    return json_encode(['file' => $file], JSON_UNESCAPED_SLASHES);
-			} else {
-				return '{"error": "no files defined"}';
-			}
-		} else {
-			return '{"error": "no arguments"}';
-		}
-	}
-	    
-    /**
-     * action list
+     * action index
      *
      * @return void
      */
     public function indexAction()
     {
+	    //$refs = $this->getFileReferences($this->configurationManager->getContentObject()->data['uid']);
+	    $refs = $this->getFileReferences();
+	    DebuggerUtility::var_dump($refs);
+	    exit;
 	    foreach ($this->settings['downloadsections'] as $key => $downloads) {
 		    $this->downloadsections[$key] = [
 			    'title' => $downloads['title'],
@@ -166,6 +127,7 @@ class DownloadcenterController extends ActionController
 					$this->downloadsections[$key]['collections'][] = $collection;
 					foreach ($collection as $file) {
 						$file->categories = $this->getCategoriesFromFile($file->getUid());
+						//$file->ref = $this->fileRepository->findFileReferenceByUid($file->getUid());
 						if ($file->getCreationTime() > strtotime('-'.$this->settings['newUntil'].' day')) {
 							$file->isnew = true;
 						} else {
@@ -180,8 +142,7 @@ class DownloadcenterController extends ActionController
         //$this->view->assign('downloadsections', $this->downloadsections);
         $this->view->assignMultiple([
 	        'header' => $this->contentObj->data['header'],
-        	'downloadsections' => $this->downloadsections,
-        	'hash' => $this->hash
+        	'downloadsections' => $this->downloadsections
         ]);
     }
 }

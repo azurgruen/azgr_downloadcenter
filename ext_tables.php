@@ -21,8 +21,8 @@ call_user_func(
 
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($extKey, 'Configuration/TypoScript', 'Downloadcenter');
 
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_azgrdownloadcenter_domain_model_downloads', 'EXT:azgr_downloadcenter/Resources/Private/Language/locallang_csh_tx_azgrdownloadcenter_domain_model_downloads.xlf');
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_azgrdownloadcenter_domain_model_downloads');
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_azgrdownloadcenter_domain_model_download', 'EXT:azgr_downloadcenter/Resources/Private/Language/locallang_csh_tx_azgrdownloadcenter_domain_model_download.xlf');
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_azgrdownloadcenter_domain_model_download');
         
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['Azurgruen\AzgrDownloadcenter\Task\Cleaner'] = [
 			'extension' => $extKey,

@@ -13,9 +13,9 @@ namespace Azurgruen\AzgrDownloadcenter\Domain\Model;
  ***/
 
 /**
- * Downloads
+ * Download
  */
-class Downloads extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Download extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
     /**
      * uuid
@@ -42,6 +42,7 @@ class Downloads extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * salutation
      *
      * @var string
+     * @validate Integer
      */
     protected $salutation = '';
     
@@ -49,6 +50,7 @@ class Downloads extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * firstName
      *
      * @var string
+     * @validate StringLength(minimum=2, maximum=255)
      */
     protected $firstName = '';
     
@@ -56,6 +58,7 @@ class Downloads extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * lastName
      *
      * @var string
+     * @validate StringLength(minimum=2, maximum=255)
      */
     protected $lastName = '';
     
@@ -63,6 +66,7 @@ class Downloads extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * company
      *
      * @var string
+     * @validate StringLength(minimum=2, maximum=255)
      */
     protected $company = '';
     
@@ -70,8 +74,39 @@ class Downloads extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * email
      *
      * @var string
+     * @validate EmailAddress
      */
     protected $email = '';
+    
+    /**
+     * __construct
+     */
+    public function __construct()
+    {
+        $this->files = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+    }
+
+    /**
+     * Adds a FileReference
+     *
+     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $file
+     * @return void
+     */
+    public function addFile(\TYPO3\CMS\Extbase\Domain\Model\FileReference $file)
+    {
+        $this->files->attach($file);
+    }
+
+    /**
+     * Removes a FileReference
+     *
+     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $fileToRemove The FileReference to be removed
+     * @return void
+     */
+    public function removeFile(\TYPO3\CMS\Extbase\Domain\Model\FileReference $fileToRemove)
+    {
+        $this->files->detach($fileToRemove);
+    }
 
     /**
      * Returns the uuid
@@ -118,7 +153,7 @@ class Downloads extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the files
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     * @var \TYPO3\CMS\Extbase\Domain\Model\ObjectStorage
      */
     public function getFiles()
     {
@@ -128,13 +163,14 @@ class Downloads extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the files
      *
-     * @param string $files
+     * @param \TYPO3\CMS\Extbase\Domain\Model\ObjectStorage
      * @return void
      */
     public function setFiles($files)
     {
         $this->files = $files;
     }
+    
     
     /**
      * Returns the salutation
