@@ -1,0 +1,10 @@
+## Misc
+- make cookie name variable
+- hardcoded strings -> translations
+
+## Controller/Download
+- clean up
+- send E-Mail(s)
+
+## Task/Cleaner
+- really delete files
