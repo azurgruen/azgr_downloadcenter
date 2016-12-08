@@ -88,6 +88,7 @@ class DownloadcenterController extends ActionController
 	}
 */
     
+/*
     protected function getFileReferences()
     {
 	    $asd = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Resource\\FileRepository');
@@ -96,6 +97,7 @@ class DownloadcenterController extends ActionController
         $result = $query->statement($sql)->execute()->toArray();
         return $result;
     }
+*/
     
     /**
      * action index
@@ -105,9 +107,7 @@ class DownloadcenterController extends ActionController
     public function indexAction()
     {
 	    //$refs = $this->getFileReferences($this->configurationManager->getContentObject()->data['uid']);
-	    $refs = $this->getFileReferences();
-	    DebuggerUtility::var_dump($refs);
-	    exit;
+	    //$refs = $this->getFileReferences();
 	    foreach ($this->settings['downloadsections'] as $key => $downloads) {
 		    $this->downloadsections[$key] = [
 			    'title' => $downloads['title'],

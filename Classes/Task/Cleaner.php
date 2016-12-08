@@ -29,7 +29,7 @@ class Cleaner extends \TYPO3\CMS\Scheduler\Task\AbstractTask
 	
 	public function execute()
 	{
-		$settings = $this->getSettings()['plugin.']['tx_azgrdownloadcenter_zip.']['settings.'];
+		$settings = $this->getSettings()['plugin.']['tx_azgrdownloadcenter_downloadcenter.']['settings.'];
 		$dir = $settings['uploadDir'];
 		$ttl = $settings['ttl'];
 		$resourceFactory = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance();

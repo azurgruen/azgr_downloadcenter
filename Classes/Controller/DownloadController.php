@@ -42,6 +42,16 @@ class DownloadController extends ActionController
     protected $zip;
     
     /**
+     * @var string
+     */
+    protected $uuid;
+    
+    /**
+     * @var array
+     */
+    protected $files;
+    
+    /**
      * @return array
      */
 /*
@@ -55,23 +65,18 @@ class DownloadController extends ActionController
 */
     
     /**
-     * @param string $files 
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $files 
      * @return void
      */
     protected function addFilesToZip($files)
     {
-	    $dir = $this->settings['zipDir'];
-	    $pathprefix = $this->settings['filemount'];
-	    
-	    if (strpos($files, ',') !== false) {
-			$files = explode(',', $files);
-			foreach ($files as $uid) {
-			    //$file = $this->fileRepository->findByUid(intval($uid));
-			    $this->zip->addFile($pathprefix.$file->getIdentifier(), $dir.$file->getName());
-		    }
-		} else {
-			$file = $this->fileRepository->findByUid(intval($files));
-		    $this->zip->addFile($pathprefix.$file->getIdentifier(), $dir.$file->getName());
+		$dir = $this->settings['zipDir'];
+		$pathprefix = $this->settings['filemount'];
+		foreach ($files as $fileReference) {
+			//DebuggerUtility::var_dump(get_class_methods($fileReference->getOriginalResource()));
+			//$file = $fileReference->getOriginalResource()->getOriginalFile();
+			$file = $fileReference->getOriginalResource();
+			$this->zip->addFile($pathprefix.$file->getIdentifier(), $dir.$file->getName());
 		}
     }
     
@@ -81,27 +86,22 @@ class DownloadController extends ActionController
      */
     protected function createZip($files)
     {
-	    if ($this->request->hasArgument('files')) {
-			$files = $this->request->getArgument('files');
-			if (!empty($files)) {
-			    $this->zip = new ZipArchive();
-				$filename = 'fileadmin/'.$this->settings['uploadDir'].$this->settings['zipPrefix'].$this->uuid.'.zip';
-				if ($this->zip->open($filename, ZipArchive::CREATE) !== true) {
-				    return '{"error": "no file created"}';
-				    exit;
-				}
-				if (!empty($this->settings['filesDefault'])) {
-					$this->addFilesToZip($this->settings['filesDefault']);
-				}
-				$this->addFilesToZip($files);
-			    $this->zip->close();
-				$file = $this->request->getBaseUri().$filename;
-			    return $file;
-			} else {
-				return '{"error": "no files defined"}';
+		if (!empty($files)) {
+		    $this->zip = new ZipArchive();
+			$filename = 'fileadmin/'.$this->settings['uploadDir'].$this->settings['zipPrefix'].$this->uuid.'.zip';
+			if ($this->zip->open($filename, ZipArchive::CREATE) !== true) {
+			    return '{"error": "no file created"}';
+			    exit;
 			}
+			if (!empty($this->settings['filesDefault'])) {
+				$this->addFilesToZip($this->settings['filesDefault']);
+			}
+			$this->addFilesToZip($files);
+		    $this->zip->close();
+			$file = $this->request->getBaseUri().$filename;
+		    return $file;
 		} else {
-			return '{"error": "no arguments"}';
+			return '{"error": "no files defined"}';
 		}
 	}
 	
@@ -119,17 +119,39 @@ class DownloadController extends ActionController
     /**
      * action new
      *
+     * @param \Azurgruen\AzgrDownloadcenter\Domain\Model\Download $download
      * @return void
      */
-    public function newAction()
+    public function newAction(\Azurgruen\AzgrDownloadcenter\Domain\Model\Download $download = null)
     {
-	    $download = new \Azurgruen\AzgrDownloadcenter\Domain\Model\Download();
+	    //$download = new \Azurgruen\AzgrDownloadcenter\Domain\Model\Download();
 	    //DebuggerUtility::var_dump($this->getReferenceUids());
         $this->view->assignMultiple([
         	'download' => $download,
         	'files' => json_decode($_COOKIE['azgrdlc'])
         	//'files' => implode(',',json_decode($_COOKIE['azgrdlc']))
         ]);
+    }
+    
+    /**
+     * set up download model
+     */
+    public function initializeCreateAction()
+    {
+/*
+        $download = $this->request->getArgument('download');
+        DebuggerUtility::var_dump($download);
+*/
+		$files = $this->request->getArgument('files');
+	    foreach ($files as $uid) {
+			$file = $this->fileRepository->findByUid(intval($uid));
+			//$fileref = $this->fileRepository->findFileReferenceByUid(intval($uid));
+			$fileReference = $this->objectManager->get('Helhum\\UploadExample\\Domain\\Model\\FileReference');
+			$fileReference->setFile($file);
+			$this->files[] = $fileReference;
+			//$download->addFile($fileReference);
+			//DebuggerUtility::var_dump($fileReference);
+		}
     }
     
     /**
@@ -141,21 +163,16 @@ class DownloadController extends ActionController
      */
     public function createAction(\Azurgruen\AzgrDownloadcenter\Domain\Model\Download $download = null)
     {
-/*
-	    $files = explode(',', GeneralUtility::_GP('files'));
-	    foreach ($files as $uid) {
-		    $file = $this->fileRepository->findByUid(intval($uid));
-		    //$fileref = $this->fileRepository->findFileReferenceByUid(intval($uid));
-		    DebuggerUtility::var_dump($file);
-		    //$download->addFile($file);
-		}
-*/
-	    DebuggerUtility::var_dump($download);
-	    exit;
-	    $zipFile = $this->createZip($download->files);
-	    $download->uuid = $uniqid();
-	    $download->file = $zipFile;
-	    DebuggerUtility::var_dump($download);
-        //$downloads = $this->downloadRepository->add($download);
+	    foreach ($this->files as $fileReference) {
+		    $download->addFile($fileReference);
+	    }
+		//DebuggerUtility::var_dump($this->files);
+		
+		$this->uuid = uniqid();
+	    $zipFile = $this->createZip($download->getFiles());
+	    //exit;
+	    $download->setUuid($this->uuid);
+	    //$download-setFilename($zipFile);
+        $downloads = $this->downloadRepository->add($download);
     }
 }

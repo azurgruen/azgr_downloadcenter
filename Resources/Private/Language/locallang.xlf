@@ -3,16 +3,16 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2016-10-02T15:09:00Z" product-name="azgr_downloadcenter">
 		<header/>
 		<body>
-			<trans-unit id="tx_azgrdownloadcenter_domain_model_downloads">
+			<trans-unit id="tx_azgrdownloadcenter_domain_model_download">
 				<source>Downloads</source>
 			</trans-unit>
-			<trans-unit id="tx_azgrdownloadcenter_domain_model_downloads.uuid">
+			<trans-unit id="tx_azgrdownloadcenter_domain_model_download.uuid">
 				<source>Uuid</source>
 			</trans-unit>
-			<trans-unit id="tx_azgrdownloadcenter_domain_model_downloads.filename">
+			<trans-unit id="tx_azgrdownloadcenter_domain_model_download.filename">
 				<source>Filename</source>
 			</trans-unit>
-			<trans-unit id="tx_azgrdownloadcenter_domain_model_downloads.files">
+			<trans-unit id="tx_azgrdownloadcenter_domain_model_download.files">
 				<source>Files</source>
 			</trans-unit>
 			

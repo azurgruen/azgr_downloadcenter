@@ -1,8 +1,21 @@
-config.tx_extbase.persistence.classes {
-	Azurgruen\AzgrDownloadcenter\Domain\Model\Category {
-		mapping {
-			tableName = sys_category
-			recordType = Tx_Downloadcenter_Category
+config.tx_extbase {
+	persistence.classes {
+		Azurgruen\AzgrDownloadcenter\Domain\Model\Category {
+			mapping {
+				tableName = sys_category
+				recordType = Tx_Downloadcenter_Category
+			}
 		}
+		Helhum\UploadExample\Domain\Model\FileReference {
+			mapping {
+				tableName = sys_file_reference
+				columns {
+					uid_local.mapOnProperty = originalFileIdentifier
+				}
+			}
+		}
+	}
+	objects {
+		TYPO3\CMS\Extbase\Domain\Model\FileReference.className = Helhum\UploadExample\Domain\Model\FileReference
 	}
 }

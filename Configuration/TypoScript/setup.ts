@@ -14,6 +14,13 @@ plugin.tx_azgrdownloadcenter_downloadcenter {
   }
   settings {
 	newUntil = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.newUntil}
+	includejQuery = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.includejQuery}
+	filemount = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.filemount}
+    uploadDir = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.uploadDir}
+    zipPrefix = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.zipPrefix}
+    zipDir = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.zipDir}
+    filesDefault = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.filesDefault}
+    ttl = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.ttl}
   }
   features {
     #skipDefaultArguments = 1
@@ -41,25 +48,3 @@ page.includeJS {
 	downloadcenter = EXT:azgr_downloadcenter/Resources/Public/Javascript/Downloadcenter.js
 }
 
-plugin.tx_azgrdownloadcenter_zip {
-	settings {
-	    filemount = {$plugin.tx_azgrdownloadcenter_zip.settings.filemount}
-	    uploadDir = {$plugin.tx_azgrdownloadcenter_zip.settings.uploadDir}
-	    zipPrefix = {$plugin.tx_azgrdownloadcenter_zip.settings.zipPrefix}
-	    zipDir = {$plugin.tx_azgrdownloadcenter_zip.settings.zipDir}
-	    filesDefault = {$plugin.tx_azgrdownloadcenter_zip.settings.filesDefault}
-	    ttl = {$plugin.tx_azgrdownloadcenter_zip.settings.ttl}
-	  }
-}
-
-zip = PAGE
-zip {
-	config {
-		disableAllHeaderCode = 1
-		additionalHeaders = Content-type:application/json
-		debug = 0
-		no_cache = 1
-	}
-	typeNum = 65478
-	10 < tt_content.list.20.azgrdownloadcenter_zip
-}

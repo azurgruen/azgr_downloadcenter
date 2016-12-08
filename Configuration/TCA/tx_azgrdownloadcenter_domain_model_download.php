@@ -1,7 +1,7 @@
 <?php
 return [
     'ctrl' => [
-        'title'	=> 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads',
+        'title'	=> 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_download',
         'label' => 'uuid',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -20,7 +20,7 @@ return [
             'endtime' => 'endtime',
         ],
         'searchFields' => 'uuid,filename,files,salutation,first_name,last_name,company,email',
-        'iconfile' => 'EXT:azgr_downloadcenter/Resources/Public/Icons/tx_azgrdownloadcenter_domain_model_downloads.gif'
+        'iconfile' => 'EXT:azgr_downloadcenter/Resources/Public/Icons/tx_azgrdownloadcenter_domain_model_download.gif'
     ],
     'interface' => [
         'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, uuid, filename, files, salutation, first_name, last_name, company, email',
@@ -48,8 +48,8 @@ return [
                 'items' => [
                     ['', 0],
                 ],
-                'foreign_table' => 'tx_azgrdownloadcenter_domain_model_downloads',
-                'foreign_table_where' => 'AND tx_azgrdownloadcenter_domain_model_downloads.pid=###CURRENT_PID### AND tx_azgrdownloadcenter_domain_model_downloads.sys_language_uid IN (-1,0)',
+                'foreign_table' => 'tx_azgrdownloadcenter_domain_model_download',
+                'foreign_table_where' => 'AND tx_azgrdownloadcenter_domain_model_download.pid=###CURRENT_PID### AND tx_azgrdownloadcenter_domain_model_download.sys_language_uid IN (-1,0)',
             ],
         ],
         'l10n_diffsource' => [
@@ -112,17 +112,18 @@ return [
 
 	    'uuid' => [
 	        'exclude' => 1,
-	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.uuid',
+	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_download.uuid',
 	        'config' => [
 			    'type' => 'input',
 			    'size' => 30,
-			    'eval' => 'trim'
+			    'eval' => 'trim',
+			    'readOnly' => true
 			],
 	        
 	    ],
 	    'filename' => [
 	        'exclude' => 1,
-	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.filename',
+	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_download.filename',
 	        'config' => [
 			    'type' => 'input',
 			    'size' => 30,
@@ -132,7 +133,7 @@ return [
 	    ],
 	    'files' => [
 	        'exclude' => 1,
-	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.files',
+	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_download.files',
 	        'config' => 
 	        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
 			    'images',
@@ -180,16 +181,16 @@ return [
 	    ],
 	    'salutation' => [
 	        'exclude' => 1,
-	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.salutation',
+	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_download.salutation',
 	        'config' => [
 			    'type' => 'radio',
 			    'items' => [
 				    [
-					    'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.salutation.I.0',
+					    'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_download.salutation.I.0',
 					    0
 				    ],
 				    [
-					    'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.salutation.I.1',
+					    'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_download.salutation.I.1',
 					    1
 				    ]
 			    ]
@@ -198,7 +199,7 @@ return [
 	    ],
 	    'first_name' => [
 	        'exclude' => 1,
-	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.firstName',
+	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_download.firstName',
 	        'config' => [
 			    'type' => 'input',
 			    'size' => 30,
@@ -208,7 +209,7 @@ return [
 	    ],
 	    'last_name' => [
 	        'exclude' => 1,
-	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.lastName',
+	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_download.lastName',
 	        'config' => [
 			    'type' => 'input',
 			    'size' => 30,
@@ -218,7 +219,7 @@ return [
 	    ],
 	    'company' => [
 	        'exclude' => 1,
-	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.company',
+	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_download.company',
 	        'config' => [
 			    'type' => 'input',
 			    'size' => 30,
@@ -228,7 +229,7 @@ return [
 	    ],
 	    'email' => [
 	        'exclude' => 1,
-	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_downloads.email',
+	        'label' => 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_download.email',
 	        'config' => [
 			    'type' => 'input',
 			    'size' => 30,
