@@ -24,14 +24,14 @@ class Cleaner extends \TYPO3\CMS\Scheduler\Task\AbstractTask
 	    $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');    
 		$configurationManager = $objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager');
 		$settings = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-		return $settings;
+		return $settings['plugin.']['tx_azgrdownloadcenter_downloadcenter.']['settings.'];
     }
 	
 	public function execute()
 	{
-		$settings = $this->getSettings()['plugin.']['tx_azgrdownloadcenter_downloadcenter.']['settings.'];
+		$settings = $this->getSettings();
 		$dir = $settings['uploadDir'];
-		$ttl = $settings['ttl'];
+		$ttl = $settings['zip']['ttl'];
 		$resourceFactory = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance();
 		$storage = $resourceFactory->getDefaultStorage();
 		$folder = $storage->getFolder($dir);

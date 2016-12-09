@@ -17,10 +17,17 @@ plugin.tx_azgrdownloadcenter_downloadcenter {
 	includejQuery = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.includejQuery}
 	filemount = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.filemount}
     uploadDir = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.uploadDir}
-    zipPrefix = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.zipPrefix}
-    zipDir = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.zipDir}
-    filesDefault = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.filesDefault}
-    ttl = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.ttl}
+    zip {
+    	prefix = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.zip.prefix}
+	    dir = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.zip.dir}
+	    defaultFiles = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.zip.defaultFiles}
+	    ttl = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.zip.ttl}
+	}
+	mail {
+		senderName = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.mail.senderName}
+		senderAddress = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.mail.senderAddress}
+		subject = {$plugin.tx_azgrdownloadcenter_downloadcenter.settings.mail.subject}
+	}
   }
   features {
     #skipDefaultArguments = 1

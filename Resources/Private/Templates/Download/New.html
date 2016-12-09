@@ -3,15 +3,17 @@
 
 <f:section name="main">
 
+<f:form.validationResults for="{download}">
+	<f:if condition="{validationResults.flattenedErrors}">
+		Please fill out all required fields properly
+	</f:if>
+</f:form.validationResults>
+
 <f:form method="post" action="create" name="download" object="{download}" id="dlc">
 	<f:for each="{files}" as="file" iteration="iterator">
 		<f:comment><f:form.hidden property="files.{iterator.index}" value="{file}" /></f:comment>
 		<f:form.hidden name="files[{iterator.index}]" value="{file}" />
-	</f:for>
-	<f:comment>
-	<f:form.hidden property="files.0" value="8" />
-	<f:form.hidden property="files.1" value="9" />
-	</f:comment>
+	</f:for>	
 	<f:form.radio property="salutation" value="0" />
 	<f:form.radio property="salutation" value="1" />
 	<f:form.textfield property="firstName" />

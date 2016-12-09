@@ -6,7 +6,7 @@ config.tx_extbase {
 				recordType = Tx_Downloadcenter_Category
 			}
 		}
-		Helhum\UploadExample\Domain\Model\FileReference {
+		Azurgruen\AzgrDownloadcenter\Domain\Model\FileReference {
 			mapping {
 				tableName = sys_file_reference
 				columns {
@@ -16,6 +16,6 @@ config.tx_extbase {
 		}
 	}
 	objects {
-		TYPO3\CMS\Extbase\Domain\Model\FileReference.className = Helhum\UploadExample\Domain\Model\FileReference
+		TYPO3\CMS\Extbase\Domain\Model\FileReference.className = Azurgruen\AzgrDownloadcenter\Domain\Model\FileReference
 	}
 }

@@ -1,0 +1,21 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="main">
+
+<f:if condition="{data.salutation} == 0">
+	<f:then>Sehr geehrter Herr {data.lastName},</f:then>
+	<f:else>Sehr geehrte Frau {data.lastName},</f:else>
+</f:if>
+
+vielen Dank für Ihr Interesse!
+
+Ihr gewünschtes Paket können Sie hier herunterladen: {file}
+
+Der Link ist bis zum <f:format.date format="d.m.Y">+ {ttl} day</f:format.date> gültig.
+
+Mit freundlichen Grüßen,
+blabla
+
+</f:section>
+</html>

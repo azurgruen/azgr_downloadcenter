@@ -23,6 +23,16 @@ use \ZipArchive;
 class DownloadController extends ActionController
 {
 	/**
+     * Name for cookie containing file uids
+     */
+	const COOKIE_FILES = 'azgrdlc_files';
+	
+	/**
+     * Name for cookie containing zip uuids
+     */
+	const COOKIE_UUID = 'azgrdlc_id';
+	
+	/**
      * DownloadRepository
      *
      * @var \Azurgruen\AzgrDownloadcenter\Domain\Repository\DownloadRepository
@@ -52,28 +62,14 @@ class DownloadController extends ActionController
     protected $files;
     
     /**
-     * @return array
-     */
-/*
-    public function getReferenceUids()
-    {
-        $this->fileRepository->createQuery();
-        $sql = 'SELECT uid,uid_local FROM sys_file_reference';
-        $result = $query->statement($sql)->execute()->toArray();
-        return $result;
-    }
-*/
-    
-    /**
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $files 
      * @return void
      */
     protected function addFilesToZip($files)
     {
-		$dir = $this->settings['zipDir'];
+		$dir = $this->settings['zip']['dir'];
 		$pathprefix = $this->settings['filemount'];
 		foreach ($files as $fileReference) {
-			//DebuggerUtility::var_dump(get_class_methods($fileReference->getOriginalResource()));
 			//$file = $fileReference->getOriginalResource()->getOriginalFile();
 			$file = $fileReference->getOriginalResource();
 			$this->zip->addFile($pathprefix.$file->getIdentifier(), $dir.$file->getName());
@@ -88,13 +84,13 @@ class DownloadController extends ActionController
     {
 		if (!empty($files)) {
 		    $this->zip = new ZipArchive();
-			$filename = 'fileadmin/'.$this->settings['uploadDir'].$this->settings['zipPrefix'].$this->uuid.'.zip';
+			$filename = 'fileadmin/'.$this->settings['uploadDir'].$this->settings['zip']['prefix'].$this->uuid.'.zip';
 			if ($this->zip->open($filename, ZipArchive::CREATE) !== true) {
 			    return '{"error": "no file created"}';
 			    exit;
 			}
-			if (!empty($this->settings['filesDefault'])) {
-				$this->addFilesToZip($this->settings['filesDefault']);
+			if (!empty($this->settings['zip']['defaultFiles'])) {
+				$this->addFilesToZip($this->settings['zip']['defaultFiles']);
 			}
 			$this->addFilesToZip($files);
 		    $this->zip->close();
@@ -104,6 +100,45 @@ class DownloadController extends ActionController
 			return '{"error": "no files defined"}';
 		}
 	}
+	
+	/**
+     * @param array $sender sender of the email in the format array('sender@domain.tld' => 'Sender Name')
+     * @param array $recipient recipient of the email in the format array('recipient@domain.tld' => 'Recipient Name')
+     * @param string $subject subject of the email
+     * @param string $templateName template name (UpperCamelCase)
+     * @param array $variables variables to be passed to the Fluid view
+     * @return boolean TRUE on success, otherwise false
+     */
+    protected function sendTemplateEmail(array $sender, array $recipient, $subject, $layout, $template, array $variables)
+    {
+		$emailView = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+		$templatePathAndFilename = GeneralUtility::getFileAbsFileName($template . '.html');
+		//$layoutPath = GeneralUtility::getFileAbsFileName($layout . '.html');
+		//DebuggerUtility::var_dump(get_class_methods($emailView));
+		$emailView->setLayoutRootPath($layout);
+		$emailView->setTemplatePathAndFilename($templatePathAndFilename);
+		$emailView->assignMultiple($variables);
+		$emailBody = $emailView->render();
+		
+		$message = $this->objectManager->get('TYPO3\\CMS\\Core\\Mail\\MailMessage');
+		$message
+		->setTo($recipient)
+		->setFrom($sender)
+		->setSubject($subject);
+		
+		// Possible attachments here
+/*
+		foreach ($attachments as $attachment) {
+		    $message->attach($attachment);
+		}
+*/
+		
+		$message->setBody($emailBody, 'text/plain');
+		//$message->setBody($emailBody, 'text/html');
+		
+		$message->send();
+		return $message->isSent();
+    }
 	
     /**
      * action list
@@ -124,12 +159,9 @@ class DownloadController extends ActionController
      */
     public function newAction(\Azurgruen\AzgrDownloadcenter\Domain\Model\Download $download = null)
     {
-	    //$download = new \Azurgruen\AzgrDownloadcenter\Domain\Model\Download();
-	    //DebuggerUtility::var_dump($this->getReferenceUids());
         $this->view->assignMultiple([
         	'download' => $download,
-        	'files' => json_decode($_COOKIE['azgrdlc'])
-        	//'files' => implode(',',json_decode($_COOKIE['azgrdlc']))
+        	'files' => json_decode($_COOKIE[self::COOKIE_FILES])
         ]);
     }
     
@@ -138,19 +170,14 @@ class DownloadController extends ActionController
      */
     public function initializeCreateAction()
     {
-/*
-        $download = $this->request->getArgument('download');
-        DebuggerUtility::var_dump($download);
-*/
+	    // convert files to file references and save them for later use
 		$files = $this->request->getArgument('files');
 	    foreach ($files as $uid) {
 			$file = $this->fileRepository->findByUid(intval($uid));
-			//$fileref = $this->fileRepository->findFileReferenceByUid(intval($uid));
-			$fileReference = $this->objectManager->get('Helhum\\UploadExample\\Domain\\Model\\FileReference');
+			$fileReference = $this->objectManager->get('Azurgruen\\AzgrDownloadcenter\\Domain\\Model\\FileReference');
 			$fileReference->setFile($file);
 			$this->files[] = $fileReference;
 			//$download->addFile($fileReference);
-			//DebuggerUtility::var_dump($fileReference);
 		}
     }
     
@@ -158,21 +185,43 @@ class DownloadController extends ActionController
      * action create
      *
      * @param \Azurgruen\AzgrDownloadcenter\Domain\Model\Download $download
-     * @ignorevalidation $download
      * @return void
      */
     public function createAction(\Azurgruen\AzgrDownloadcenter\Domain\Model\Download $download = null)
     {
+	    // add file references to the download model (created in initializeCreateAction)
 	    foreach ($this->files as $fileReference) {
 		    $download->addFile($fileReference);
 	    }
-		//DebuggerUtility::var_dump($this->files);
-		
 		$this->uuid = uniqid();
+		if (isset($_COOKIE[self::COOKIE_UUID])) {
+			$cookiedata = unserialize($_COOKIE[self::COOKIE_UUID]);
+			$cookiedata[] = $this->uuid();
+		} else {
+			$cookie = setcookie(self::COOKIE_UUID, [$this->uuid], time()+60*60*24*$this->settings['zip']['ttl']);
+			var_dump($cookie);
+		}
+		DebuggerUtility::var_dump($_COOKIE[self::COOKIE_UUID]);
+		exit;
 	    $zipFile = $this->createZip($download->getFiles());
-	    //exit;
 	    $download->setUuid($this->uuid);
-	    //$download-setFilename($zipFile);
         $downloads = $this->downloadRepository->add($download);
+        $mail = $this->sendTemplateEmail(
+        	[$this->settings['mail']['senderAddress'] => $this->settings['mail']['senderName']],
+        	[$download->getEmail() => $download->getFirstName() .' '. $download->getLastName()],
+        	$this->settings['mail']['subject'],
+        	'EXT:azgr_downloadcenter/Resources/Private/Layouts/',
+        	$this->view->getTemplateRootPaths()[0] . 'Email/New',
+        	[
+        		'data' => $download,
+        		'file' => $zipFile,
+        		'ttl' => $this->settings['zip']['ttl']
+        	]
+        );
+	    
+        $this->view->assignMultiple([
+        	'download' => $download,
+        	'file' => $zipFile
+        ]);
     }
 }

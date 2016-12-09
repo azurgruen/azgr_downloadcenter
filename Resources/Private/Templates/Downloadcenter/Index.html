@@ -55,7 +55,7 @@
 					<div data-tid="{collection.uid}" data-group="{collection.title}">
 					<h3>{collection.title}</h3>
 					<f:for each="{collection}" as="file">
-						<div class="file" data-id="{file.uid}">
+						<div class="file {f:if(condition: file.isNew, then:'new')}" data-id="{file.uid}">
 							<p class="cat-1">{file.cat1.title}</p>
 							<p class="cat-2">{file.cat2.title}</p>
 							<p class="title">

@@ -50,6 +50,7 @@ class Download extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * firstName
      *
      * @var string
+     * @validate NotEmpty
      * @validate StringLength(minimum=2, maximum=255)
      */
     protected $firstName = '';

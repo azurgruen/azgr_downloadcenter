@@ -1,5 +1,5 @@
 <?php
-namespace Helhum\UploadExample\Domain\Model;
+namespace Azurgruen\AzgrDownloadcenter\Domain\Model;
 
 /***************************************************************
  *  Copyright notice

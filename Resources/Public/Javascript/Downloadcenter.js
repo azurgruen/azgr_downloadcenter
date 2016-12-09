@@ -5,7 +5,7 @@ var Downloadcenter = (function($) {
 	var
 	buildurl,
 	domcontainer = '.downloadcenter', // css selectors below are children of this container
-	cookiename = 'azgrdlc',
+	cookiename = 'azgrdlc_files',
 	el = {},
 	css = {
 		classes : {
@@ -172,7 +172,6 @@ var Downloadcenter = (function($) {
 		basket.files.push(id);
 		basket.filetitles.push(title);
 		Cookies.set(cookiename, JSON.stringify(basket.files));
-		console.log(JSON.stringify(basket.files));
 		el.basketcount.text(basket.countItems());
 		el.files.filter('[data-'+basket.dataAttr+'="'+id+'"]').addClass(css.classes.active);
 	};

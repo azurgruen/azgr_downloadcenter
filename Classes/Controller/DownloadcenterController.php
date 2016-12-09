@@ -69,36 +69,6 @@ class DownloadcenterController extends ActionController
         return $result;
     }
     
-/*
-    protected function getFileReferences($uid) {
-		$fileRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Resource\\FileRepository');
-		$fileObjects = $fileRepository->findByRelation('tt_content', 'image', $uid);
-		// get Imageobject information
-		$files = array();
- 
-		//print_r($fileObjects);
- 
-		foreach ($fileObjects as $key => $value) {
-		  $files[$key]['reference'] = $value->getReferenceProperties();
-		  $files[$key]['original'] = $value->getOriginalFile()->getProperties();
-		}
- 
- 
-		return $files;
-	}
-*/
-    
-/*
-    protected function getFileReferences()
-    {
-	    $asd = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Resource\\FileRepository');
-	    $query = $asd->createQuery();
-	    $sql = "SELECT uid, uid_local FROM sys_file_reference";
-        $result = $query->statement($sql)->execute()->toArray();
-        return $result;
-    }
-*/
-    
     /**
      * action index
      *
@@ -129,9 +99,9 @@ class DownloadcenterController extends ActionController
 						$file->categories = $this->getCategoriesFromFile($file->getUid());
 						//$file->ref = $this->fileRepository->findFileReferenceByUid($file->getUid());
 						if ($file->getCreationTime() > strtotime('-'.$this->settings['newUntil'].' day')) {
-							$file->isnew = true;
+							$file->isNew = true;
 						} else {
-							$file->isnew = false;
+							$file->isNew = false;
 						}
 					}
 				}
