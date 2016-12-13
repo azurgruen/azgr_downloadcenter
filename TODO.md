@@ -2,14 +2,15 @@
 - [x] make cookie name variable
 - [ ] hardcoded strings -> translations
 - [ ] error handling
-- [ ] cookie handling for browser based download only -> getAction ?
+- [x] cookie handling for browser based download only -> getAction ?
+- [x] realUrl conf
 
 ## Controller/Download
 - [ ] clean up
 - [ ] send mail copy ?
 
 ## Model/Download
-- [ ] remove "filename"
+- [x] remove "filename"
 
 ## Task/Cleaner
 - [ ] really delete files
