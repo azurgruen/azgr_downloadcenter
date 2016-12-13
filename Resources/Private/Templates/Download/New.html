@@ -13,13 +13,13 @@
 	<f:for each="{files}" as="file" iteration="iterator">
 		<f:comment><f:form.hidden property="files.{iterator.index}" value="{file}" /></f:comment>
 		<f:form.hidden name="files[{iterator.index}]" value="{file}" />
-	</f:for>	
-	<f:form.radio property="salutation" value="0" />
-	<f:form.radio property="salutation" value="1" />
-	<f:form.textfield property="firstName" />
-	<f:form.textfield property="lastName" />
-	<f:form.textfield property="company" />
-	<f:form.textfield property="email" type="email" />
+	</f:for>
+	<f:form.radio property="salutation" value="0" id="mr" /><label for="mr">Herr</label>
+	<f:form.radio property="salutation" value="1" id="ms" /><label for="ms">Frau</label>
+	<f:form.textfield property="firstName" placeholder="Vorname" />
+	<f:form.textfield property="lastName" placeholder="Nachname" />
+	<f:form.textfield property="company" placeholder="Firma" />
+	<f:form.textfield property="email" type="email" placeholder="E-Mail" />
 	<f:form.submit value="Send" />
 </f:form>
 
