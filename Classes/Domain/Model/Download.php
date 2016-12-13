@@ -25,13 +25,6 @@ class Download extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $uuid = '';
 
     /**
-     * filename
-     *
-     * @var string
-     */
-    protected $filename = '';
-
-    /**
      * files
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
@@ -128,27 +121,6 @@ class Download extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setUuid($uuid)
     {
         $this->uuid = $uuid;
-    }
-
-    /**
-     * Returns the filename
-     *
-     * @return string $filename
-     */
-    public function getFilename()
-    {
-        return $this->filename;
-    }
-
-    /**
-     * Sets the filename
-     *
-     * @param string $filename
-     * @return void
-     */
-    public function setFilename($filename)
-    {
-        $this->filename = $filename;
     }
 
     /**
