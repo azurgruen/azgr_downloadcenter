@@ -30,7 +30,7 @@ class DownloadController extends ActionController
 	/**
      * Name for cookie containing zip uuids
      */
-	const COOKIE_UUID = 'azgrdlc_id';
+	const COOKIE_AUTH = 'azgrdlc_auth';
 	
 	/**
      * DownloadRepository
@@ -102,6 +102,21 @@ class DownloadController extends ActionController
 	}
 	
 	/**
+	 * @param array $arguments
+     * @return string
+     */
+	protected function buildUri($arguments = null)
+	{
+        $uriBuilder = $this->getControllerContext()->getUriBuilder();
+        $uriBuilder->reset();
+		$uriBuilder->setArguments([
+			'tx_azgrdownloadcenter_downloadcenter' => $arguments
+		]);
+		$uri = $uriBuilder->setCreateAbsoluteUri(true)->buildFrontendUri();
+		return $uri;
+	}
+	
+	/**
      * @param array $sender sender of the email in the format array('sender@domain.tld' => 'Sender Name')
      * @param array $recipient recipient of the email in the format array('recipient@domain.tld' => 'Recipient Name')
      * @param string $subject subject of the email
@@ -141,14 +156,46 @@ class DownloadController extends ActionController
     }
 	
     /**
-     * action list
+     * action get
      *
      * @return void
      */
-    public function listAction()
+    public function getAction()
     {
-        $downloads = $this->downloadRepository->findAll();
-        $this->view->assign('downloads', $downloads);
+	    $uuid = $this->request->getArgument('download');
+	    $error = false;
+        $file = 'fileadmin/'.$this->settings['uploadDir'].$this->settings['zip']['prefix'].$uuid.'.zip';
+        
+        if (!is_file($file)) $error = true;
+        
+        if (isset($_COOKIE[self::COOKIE_AUTH])) {
+	        $cookie = $_COOKIE[self::COOKIE_AUTH];
+	        $cookiedata = unserialize($cookie);
+	        if (!in_array($uuid, $cookiedata)) $error = true;
+        } else {
+	        $error = true;
+        }
+        
+        if (!$error) {
+	        $headers = [
+				'Pragma' => 'public', 
+				'Expires' => 0, 
+				'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+				'Cache-Control' => 'public',
+				'Content-Description' => 'File Download',
+				'Content-Type' => 'application/zip',
+				'Content-Disposition' => 'attachment; filename="'. $this->settings['zip']['prefix'].$uuid.'.zip"',
+				'Content-Transfer-Encoding' => 'binary', 
+				'Content-Length' => filesize($file)         
+			];
+			
+			foreach($headers as $header => $data) {
+				$this->response->setHeader($header, $data); 
+			}
+			
+			$this->response->sendHeaders();              
+			@readfile($file);
+        }
     }
     
     /**
@@ -194,15 +241,19 @@ class DownloadController extends ActionController
 		    $download->addFile($fileReference);
 	    }
 		$this->uuid = uniqid();
-		if (isset($_COOKIE[self::COOKIE_UUID])) {
-			$cookiedata = unserialize($_COOKIE[self::COOKIE_UUID]);
-			$cookiedata[] = $this->uuid();
+		$linkarguments = [
+			'download' => $this->uuid,
+			'controller' => 'Download',
+			'action' => 'get'
+		];
+		if (isset($_COOKIE[self::COOKIE_AUTH])) {
+			$cookiedata = unserialize($_COOKIE[self::COOKIE_AUTH]);
+			$cookiedata[] = $this->uuid;
 		} else {
-			$cookie = setcookie(self::COOKIE_UUID, [$this->uuid], time()+60*60*24*$this->settings['zip']['ttl']);
-			var_dump($cookie);
+			$cookiedata = [$this->uuid];
 		}
-		DebuggerUtility::var_dump($_COOKIE[self::COOKIE_UUID]);
-		exit;
+		$cookiedata = serialize($cookiedata);
+		$cookie = setcookie(self::COOKIE_AUTH, $cookiedata, time()+60*60*24*$this->settings['zip']['ttl'], '/');
 	    $zipFile = $this->createZip($download->getFiles());
 	    $download->setUuid($this->uuid);
         $downloads = $this->downloadRepository->add($download);
@@ -214,7 +265,7 @@ class DownloadController extends ActionController
         	$this->view->getTemplateRootPaths()[0] . 'Email/New',
         	[
         		'data' => $download,
-        		'file' => $zipFile,
+        		'file' => $this->buildUri($linkarguments),
         		'ttl' => $this->settings['zip']['ttl']
         	]
         );
