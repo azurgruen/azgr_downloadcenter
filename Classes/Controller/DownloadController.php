@@ -112,7 +112,7 @@ class DownloadController extends ActionController
 		$uriBuilder->setArguments([
 			'tx_azgrdownloadcenter_downloadcenter' => $arguments
 		]);
-		$uri = $uriBuilder->setCreateAbsoluteUri(true)->buildFrontendUri();
+		$uri = $uriBuilder->setCreateAbsoluteUri(true)->setUseCacheHash(false)->buildFrontendUri();
 		return $uri;
 	}
 	
