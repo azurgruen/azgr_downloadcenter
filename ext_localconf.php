@@ -18,7 +18,7 @@ call_user_func(
             // non-cacheable actions
             [
 	            'Downloadcenter' => '',
-                'Download' => 'get'
+                'Download' => 'new, create, get'
             ]
         );
 
