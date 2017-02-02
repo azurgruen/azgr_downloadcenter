@@ -31,14 +31,14 @@ class Cleaner extends \TYPO3\CMS\Scheduler\Task\AbstractTask
 	{
 		$settings = $this->getSettings();
 		$dir = $settings['uploadDir'];
-		$ttl = $settings['zip']['ttl'];
+		$ttl = $settings['zip.']['ttl'];
 		$resourceFactory = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance();
 		$storage = $resourceFactory->getDefaultStorage();
 		$folder = $storage->getFolder($dir);
 		$files = $storage->getFilesInFolder($folder);
 		foreach($files as $file) {
 			if ($file->getCreationTime() < strtotime('-'.$ttl.' day')) {
-				\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($file->getName());
+				$file->delete();
 			}
 		}
 		return true;
