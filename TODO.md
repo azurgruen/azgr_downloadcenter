@@ -13,4 +13,4 @@
 - [x] remove "filename"
 
 ## Task/Cleaner
-- [ ] really delete files
+- [x] really delete files
