@@ -21,7 +21,7 @@
 					</a>
 					<div class="items"></div>
 				</div>
-				<f:link.action controller="Download" action="new"><f:translate key="filecollection.download" /></f:link.action>
+				<f:link.action controller="Download" action="new" class="new"><f:translate key="filecollection.download" /></f:link.action>
 			</div>
 		</div>
 	</div>
@@ -54,8 +54,12 @@
 					<h3>{collection.title}</h3>
 					<f:for each="{collection}" as="file">
 						<div class="file {f:if(condition: file.isNew, then:'new')}" data-id="{file.uid}">
-							<p class="cat-1">{file.cat1.title}</p>
-							<p class="cat-2">{file.cat2.title}</p>
+							<f:if condition="{file.cat1.title}">
+								<p class="cat-1">{file.cat1.title}</p>
+							</f:if>
+							<f:if condition="{file.cat2.title}">
+								<p class="cat-2">{file.cat2.title}</p>
+							</f:if>
 							<p class="title">
 							<f:if condition="{file.properties.title}">
 								<f:then>

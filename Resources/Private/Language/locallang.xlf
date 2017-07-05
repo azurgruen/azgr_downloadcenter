@@ -32,7 +32,7 @@
 				<source>%s PDFs selected</source>
 			</trans-unit>
 			<trans-unit id="filecollection.download">
-				<source>Download Infopackage</source>
+				<source>Download</source>
 			</trans-unit>
 		</body>
 	</file>

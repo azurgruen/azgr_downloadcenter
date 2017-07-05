@@ -35,10 +35,10 @@ var Downloadcenter = (function($) {
 		}
 	},
 	basket = {
-		itemTag : 'span',
+		itemTag : 'li',
 		itemAttr : 'data-id',
 		itemLabel : '.title', // selector of file element
-		groupTag : 'div',
+		groupTag : 'ul',
 		dataAttr : 'id', //same as file data-*
 		files : [],
 		filetitles : []

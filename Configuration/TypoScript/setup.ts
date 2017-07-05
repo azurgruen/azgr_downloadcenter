@@ -44,7 +44,7 @@ plugin.tx_azgrdownloadcenter_downloadcenter {
 
 page.includeCSS.downloadcenter = EXT:azgr_downloadcenter/Resources/Public/Stylesheets/Downloadcenter.css
 page.includeJS {
-	jquery = https://code.jquery.com/jquery-3.1.1.min.js
+	jquery = https://code.jquery.com/jquery-3.2.1.min.js
 	jquery {
 		external = 1
 		excludeFromConcatenation = 1
