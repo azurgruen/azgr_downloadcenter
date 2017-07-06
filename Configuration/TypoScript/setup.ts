@@ -1,3 +1,4 @@
+config.disableCharsetHeader = 1
 
 plugin.tx_azgrdownloadcenter_downloadcenter {
   view {

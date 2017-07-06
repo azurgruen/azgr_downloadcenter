@@ -178,15 +178,15 @@ class DownloadController extends ActionController
         
         if (!$error) {
 	        $headers = [
-				'Pragma' => 'public', 
-				'Expires' => 0, 
-				'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
-				'Cache-Control' => 'public',
+				'Pragma' => 'no-cache', 
+				'Expires' => 'Wed, 21 Oct 2015 00:00:00 GMT',
+				//'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+				'Cache-Control' => 'no-cache',
 				'Content-Description' => 'File Download',
-				'Content-Type' => 'application/zip',
 				'Content-Disposition' => 'attachment; filename="'. $this->settings['zip']['prefix'].$uuid.'.zip"',
-				'Content-Transfer-Encoding' => 'binary', 
-				'Content-Length' => filesize($file)         
+				'Content-Transfer-Encoding' => 'binary',
+				'Content-Length' => filesize($file),
+				'Content-Type' => 'application/zip'
 			];
 			
 			foreach($headers as $header => $data) {
