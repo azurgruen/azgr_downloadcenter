@@ -14,19 +14,19 @@
 		<f:comment><f:form.hidden property="files.{iterator.index}" value="{file}" /></f:comment>
 		<f:form.hidden name="files[{iterator.index}]" value="{file}" />
 	</f:for>
-	<div>
+	<div class="input-group">
 		<f:form.radio property="salutation" value="0" id="mr" /><label for="mr">Herr</label>
 		<f:form.radio property="salutation" value="1" id="ms" /><label for="ms">Frau</label>
 	</div>
-	<div>
+	<div class="input-group">
 		<f:form.textfield property="firstName" placeholder="Vorname" />
 		<f:form.textfield property="lastName" placeholder="Nachname" />
 	</div>
-	<div>
+	<div class="input-group">
 		<f:form.textfield property="company" placeholder="Firma" />
 		<f:form.textfield property="email" type="email" placeholder="E-Mail" />
 	</div>
-	<f:form.submit value="Send" />
+	<f:form.submit value="{f:translate(key:'filecollection.create')}" />
 </f:form>
 
 </f:section>

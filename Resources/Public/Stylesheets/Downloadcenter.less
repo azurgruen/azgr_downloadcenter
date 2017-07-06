@@ -17,6 +17,9 @@
 	.tab-content > *.active {
 		display: inherit;
 	}
+	h2 {
+		margin-top: 0;
+	}
 	a {
 		text-decoration: none;
 	}
@@ -100,7 +103,7 @@
 			}
 		}
 		.file {
-			width: 50%;
+			width: ~'calc(50% - 10px)';
 			margin: 0 10px 10px 0;
 			padding: 20px;
 			background: #fff;
@@ -123,7 +126,7 @@
 	.downloadcenter {
 		.panel {
 			.file {
-				width: 25%;
+				width: ~'calc(25% - 10px)';
 			}
 		}
 	}
