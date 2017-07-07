@@ -2,7 +2,10 @@
 return [
     'ctrl' => [
         'title'	=> 'LLL:EXT:azgr_downloadcenter/Resources/Private/Language/locallang_db.xlf:tx_azgrdownloadcenter_domain_model_download',
-        'label' => 'uuid',
+        'label' => 'last_name',
+        'label_alt' => 'first_name',
+        'label_alt_force' => true,
+        'default_sortby' => 'ORDER BY last_name',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
