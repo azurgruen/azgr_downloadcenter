@@ -1,7 +1,7 @@
 <?php
 defined('TYPO3_MODE') || die('Access denied.');
 
-// Define TypoScript as content rendering template
+// Define FSC as content rendering template
 $GLOBALS['TYPO3_CONF_VARS']['FE']['contentRenderingTemplates'][] = 'fluidstyledcontent/Configuration/TypoScript/Static/';
 
 call_user_func(
@@ -12,24 +12,13 @@ call_user_func(
             'Azurgruen.AzgrDownloadcenter',
             'Downloadcenter',
             [
-                'Downloadcenter' => 'index'
+                'Downloadcenter' => 'index',
+                'Download' => 'new, create, get'
             ],
             // non-cacheable actions
             [
 	            'Downloadcenter' => '',
-                'Downloads' => ''
-            ]
-        );
-        
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Azurgruen.AzgrDownloadcenter',
-            'zip',
-            [
-                'Downloadcenter' => 'create'
-            ],
-            // non-cacheable actions
-            [
-	            'Downloadcenter' => 'create'
+                'Download' => 'new, create, get'
             ]
         );
 

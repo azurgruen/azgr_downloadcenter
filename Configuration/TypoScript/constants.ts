@@ -1,3 +1,6 @@
+# customsubcategory=general=Allgemein
+# customsubcategory=filesettings=Dateisystem
+# customsubcategory=mail=E-Mail
 
 plugin.tx_azgrdownloadcenter_downloadcenter {
   view {
@@ -9,22 +12,32 @@ plugin.tx_azgrdownloadcenter_downloadcenter {
     layoutRootPath =
   }
   persistence {
-    # cat=plugin.tx_azgrdownloadcenter_downloadcenter//a; type=string; label=Default storage PID
-    #storagePid =
+    # cat=plugin.tx_azgrdownloadcenter_downloadcenter/general/a; type=int+; label=Default storage PID
+    storagePid =
   }
-}
-
-plugin.tx_azgrdownloadcenter_zip {
-	settings {
-		# cat=plugin.tx_azgrdownloadcenter_zip/settings; type=string; label=Filemount
-	    filemount = fileadmin/
-		# cat=plugin.tx_azgrdownloadcenter_zip/settings; type=string; label=Upload directory
-	    uploadDir = uploads/zip/
-	    # cat=plugin.tx_azgrdownloadcenter_zip/settings; type=string; label=Zip file prefix
-	    zipPrefix = proALPHA-Downloads-
-	    # cat=plugin.tx_azgrdownloadcenter_zip/settings; type=string; label=Zip directory
-	    zipDir = proALPHA Downloads
-	    # cat=plugin.tx_azgrdownloadcenter_zip/settings; type=string; label=Always add following files (comma-separated id)
-	    filesDefault = 
+  settings {
+	# cat=plugin.tx_azgrdownloadcenter_downloadcenter//a; type=int+; label=New until (days)
+    newUntil = 1
+	# cat=plugin.tx_azgrdownloadcenter_downloadcenter/general/a; type=boolean; label=Include jQuery
+    includejQuery = 0
+    # cat=plugin.tx_azgrdownloadcenter_downloadcenter/filesettings/a; type=string; label=Filemount
+    filemount = fileadmin/
+	# cat=plugin.tx_azgrdownloadcenter_downloadcenter/filesettings/a; type=string; label=Upload directory
+    uploadDir = zip/
+    # cat=plugin.tx_azgrdownloadcenter_downloadcenter/filesettings/a; type=string; label=Zip file prefix
+    zip.prefix = downloads-
+    # cat=plugin.tx_azgrdownloadcenter_downloadcenter/filesettings/a; type=string; label=Zip directory
+    zip.dir = Downloads
+    # cat=plugin.tx_azgrdownloadcenter_downloadcenter/filesettings/a; type=string; label=Default files (comma-separated id)
+    zip.defaultFiles = 
+    # cat=plugin.tx_azgrdownloadcenter_downloadcenter/filesettings/a; type=int+; label=Lifespan of files in days
+    zip.ttl = 7
+    
+    # cat=plugin.tx_azgrdownloadcenter_downloadcenter/mail/a; type=string; label=Sender name
+    mail.senderName = Webmaster
+    # cat=plugin.tx_azgrdownloadcenter_downloadcenter/mail/a; type=string; label=Sender address
+    mail.senderAddress = webmaster@azurgruen.de
+    # cat=plugin.tx_azgrdownloadcenter_downloadcenter/mail/a; type=string; label=Subject
+    mail.subject = Your download is ready
   }
 }

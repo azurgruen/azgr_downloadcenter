@@ -1,0 +1,134 @@
+@color-highlight: #498dca;
+@color-bg-subtle: #eee;
+
+.downloadcenter {
+	.row {
+		overflow: inherit;
+	}
+	.basket .items,
+	.filecollection,
+	.panel,
+	.tab-content > * {
+		display: none;
+	}
+	.basket .items.active,
+	.filecollection.active,
+	.panel.active,
+	.tab-content > *.active {
+		display: inherit;
+	}
+	h2 {
+		margin-top: 0;
+	}
+	a {
+		text-decoration: none;
+	}
+	p {
+		margin: 0;
+		+ p {
+			margin-top: 10px;
+		}
+	}
+	.filecollection {
+		.new {
+			margin: 0 5px;
+			padding: 10px;
+			background: @color-highlight;
+			color: #fff;
+		}
+		.basket {
+			position: relative;
+			display: inline-block;
+			.label {
+				display: block;
+				padding: 10px;
+				color: inherit;
+				background: @color-bg-subtle;
+				
+				&::after {
+					content: '';
+					display: inline-block;
+					width: 0;
+					height: 0;
+					margin-left: 5px;
+					vertical-align: middle;
+					border-top: 4px solid;
+					border-right: 4px solid transparent;
+					border-left: 4px solid transparent;
+					opacity: .8;
+				}
+			}
+			.items {
+				position: absolute;
+				min-width: 100%;
+				padding: 5px 0;
+				background: lighten(@color-bg-subtle, 3%);
+				box-shadow: 0px 1px 2px 0px darken(@color-bg-subtle, 5%);
+				cursor: pointer;
+				ul {
+					margin: 0;
+					padding: 0;
+					list-style: none;
+				}
+				li {
+					padding: 5px 10px;
+				}
+			}
+		}
+	}
+	.panel-switch {
+		display: block;
+		margin: 10px;
+	}
+	.panel {
+		.tab-nav {
+			a {
+				display: inline-block;
+				padding: 10px 20px;
+				background: lighten(@color-bg-subtle, 3%);
+				&.active {
+					background: @color-bg-subtle;
+				}
+			}
+		}
+		.tab-content {
+			padding: 20px 20px 10px 20px;
+			background: @color-bg-subtle;
+			h3 {
+				flex-basis: 100%;
+			}
+			> .active {
+				display: flex;
+				flex-wrap: wrap;
+			}
+		}
+		.file {
+			width: ~'calc(50% - 10px)';
+			margin: 0 10px 10px 0;
+			padding: 20px;
+			background: #fff;
+			border-top: 2px solid darken(@color-bg-subtle, 20%);
+			box-shadow: 1px 1px 1px 1px darken(@color-bg-subtle, 5%);
+			cursor: pointer;
+			&.active {
+				border-color: @color-highlight;
+			}
+			.title {
+				margin-bottom: 10px;
+				font-weight: bold;
+			}
+		}
+	}
+}
+
+@media only screen and (min-width: 768px) {
+	
+	.downloadcenter {
+		.panel {
+			.file {
+				width: ~'calc(25% - 10px)';
+			}
+		}
+	}
+	
+}

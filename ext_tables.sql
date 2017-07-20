@@ -1,14 +1,19 @@
 #
-# Table structure for table 'tx_azgrdownloadcenter_domain_model_downloads'
+# Table structure for table 'tx_azgrdownloadcenter_domain_model_download'
 #
-CREATE TABLE tx_azgrdownloadcenter_domain_model_downloads (
+CREATE TABLE tx_azgrdownloadcenter_domain_model_download (
 
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	uuid varchar(255) DEFAULT '' NOT NULL,
-	filename varchar(255) DEFAULT '' NOT NULL,
-	files varchar(255) DEFAULT '' NOT NULL,
+	files int(11) unsigned DEFAULT '0' NOT NULL,
+	
+	salutation tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	first_name varchar(255) DEFAULT '' NOT NULL,
+	last_name varchar(255) DEFAULT '' NOT NULL,
+	company varchar(255) DEFAULT '' NOT NULL,
+	email varchar(255) DEFAULT '' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

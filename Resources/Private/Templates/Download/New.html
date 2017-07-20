@@ -1,0 +1,33 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="main">
+
+<f:form.validationResults for="{download}">
+	<f:if condition="{validationResults.flattenedErrors}">
+		Please fill out all required fields properly
+	</f:if>
+</f:form.validationResults>
+
+<f:form method="post" action="create" name="download" object="{download}" id="dlc">
+	<f:for each="{files}" as="file" iteration="iterator">
+		<f:comment><f:form.hidden property="files.{iterator.index}" value="{file}" /></f:comment>
+		<f:form.hidden name="files[{iterator.index}]" value="{file}" />
+	</f:for>
+	<div class="input-group">
+		<f:form.radio property="salutation" value="0" id="mr" /><label for="mr">Herr</label>
+		<f:form.radio property="salutation" value="1" id="ms" /><label for="ms">Frau</label>
+	</div>
+	<div class="input-group">
+		<f:form.textfield property="firstName" placeholder="Vorname" />
+		<f:form.textfield property="lastName" placeholder="Nachname" />
+	</div>
+	<div class="input-group">
+		<f:form.textfield property="company" placeholder="Firma" />
+		<f:form.textfield property="email" type="email" placeholder="E-Mail" />
+	</div>
+	<f:form.submit value="{f:translate(key:'filecollection.create')}" />
+</f:form>
+
+</f:section>
+</html>
